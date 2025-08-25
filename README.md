@@ -1,12 +1,12 @@
-# TX-ThemeHub
+# Ay-X-UI-Theme
 
-TX-UI Panel Subscription Page Templates Designed By TX Community.
+Ay-X-UI-Theme Subscription Page Templates Designed By Ay Technic.
 
 ## Quick Install
 
 you can install pre-designed user themes as your sub custom ui using below command in terminal:
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/AghayeCoder/tx-themehub/master/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/shammay-PC/Ay-X-UI-Theme/master/install.sh)
 ```
 
 ## Usable Variables
@@ -46,6 +46,11 @@ If everything is done correctly, your custom template should now be displayed in
 <details>
 <summary>AIO UI</summary>
 
+![Screenshot](./screenshots/vislo.png "AyVPN")
+</details>
+<details>
+<summary>AyVPN</summary>
+
 ![Screenshot](./screenshots/aio.png "aio")
 </details>
 <details>
@@ -72,4 +77,4 @@ If everything is done correctly, your custom template should now be displayed in
 <summary>BestBlack</summary>
 
 ![Screenshot](./screenshots/bestblack.png "bblack")
-</details># Ay-ThemeHub
+</details>
