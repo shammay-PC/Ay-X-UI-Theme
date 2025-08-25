@@ -1,4 +1,4 @@
-# Ay-X-UI-Theme
+# Ay X-UI Subscription Theme
 
 Ay-X-UI-Theme Subscription Page Templates Designed By Ay Technic.
 
