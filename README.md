@@ -44,12 +44,12 @@ If everything is done correctly, your custom template should now be displayed in
 
 ## ScreenShots
 <details>
-<summary>AIO UI</summary>
+<summary>AyVPN</summary>
 
 ![Screenshot](./screenshots/vislo.png "AyVPN")
 </details>
 <details>
-<summary>AyVPN</summary>
+<summary>AIO UI</summary>
 
 ![Screenshot](./screenshots/aio.png "aio")
 </details>
