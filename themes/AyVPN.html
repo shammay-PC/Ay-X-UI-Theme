@@ -25,6 +25,7 @@
             --primary-dark: #4f46e5;
             --secondary: #8b5cf6;
             --accent: #06b6d4;
+            --accent-dark: #0891b2;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
@@ -74,7 +75,7 @@
         }
         
         body.light-mode .usage-detail,
-        body.light-mode .connection-item {
+        body.light-mode .connection-item-list {
             background: rgba(59, 130, 246, 0.08);
             border: 1px solid rgba(59, 130, 246, 0.15);
         }
@@ -104,7 +105,8 @@
             color: #3b82f6;
         }
         
-        body.light-mode .connection-item {
+        body.light-mode .connection-item,
+        body.light-mode .connection-item-list {
             color: #1e293b;
             border: 1px solid rgba(59, 130, 246, 0.15);
         }
@@ -192,7 +194,7 @@
                 radial-gradient(circle at 20% 80%, var(--primary) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, var(--secondary) 0%, transparent 50%),
                 radial-gradient(circle at 40% 40%, var(--accent) 0%, transparent 50%);
- #           animation: float 20s ease-in-out infinite;
+            animation: float 20s ease-in-out infinite;
         }
 
         @keyframes float {
@@ -614,38 +616,43 @@
         .connections-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.5s ease;
         }
 
         .connections-content.expanded {
-            max-height: 1000px;
+            max-height: 400px; /* Limit height for scrolling */
+            overflow-y: auto;
         }
-
-        .connection-item {
+        
+        .connection-item-list {
             background: rgba(255,255,255,0.05);
             border-radius: 10px;
             margin-bottom: 1rem;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            word-break: break-all;
             transition: all 0.3s ease;
             display: flex;
             align-items: stretch;
             overflow: hidden;
             padding: 0;
+            direction: ltr;
         }
-
-        .connection-item:hover {
+        
+        .connection-item-list:hover {
             background: rgba(255,255,255,0.1);
-            transform: translateX(-5px);
         }
 
         .connection-text {
             padding: 1rem;
             flex-grow: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            word-break: normal;
+            white-space: nowrap;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
         }
 
-        .copy-btn {
+        .copy-btn-label {
             background: var(--primary);
             border: none;
             color: white;
@@ -655,14 +662,20 @@
             align-items: center;
             justify-content: center;
             padding: 0 1.2rem;
-            border-radius: 0;
+            font-size: 0.9rem;
+            min-width: 80px;
+            text-align: center;
+            font-weight: bold;
         }
-
-        .copy-btn:hover {
+        
+        .copy-btn-label:hover {
             background: var(--primary-dark);
-            transform: none;
         }
-
+        
+        #subLinkText.connection-text {
+            font-weight: bold;
+        }
+        
         /* Apps Section */
         .apps-section {
             background: var(--glass);
@@ -687,6 +700,9 @@
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         .app-card:hover {
@@ -703,10 +719,15 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            color: white;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            position: relative;
+            flex-shrink: 0;
+            background: transparent;
+        }
+        
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            object-fit: cover;
         }
 
         .app-name {
@@ -719,6 +740,21 @@
             color: #94a3b8;
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .app-button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: auto;
+        }
+        
+        .app-button-row {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .app-btn {
@@ -731,9 +767,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            line-height: 1.2;
+            flex-grow: 1;
+            flex-basis: 0;
         }
-
+        
         .app-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
@@ -802,21 +844,6 @@
             }
         }
 
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -827,7 +854,7 @@
             padding: 1rem 2rem;
             border-radius: 10px;
             z-index: 1000;
-            transform: translateX(100%);
+            transform: translateX(120%);
             transition: transform 0.3s ease;
         }
 
@@ -879,7 +906,7 @@
                 <div class="stat-icon expire">
                     <i class="fas fa-calendar-alt"></i>
                 </div>
-                <div class="stat-value" id="expireValue"></div>
+                <div class="stat-value" id="expireValue">--</div>
                 <div class="stat-label">تاریخ انقضا</div>
             </div>
 
@@ -887,7 +914,7 @@
                 <div class="stat-icon status">
                     <i class="fas fa-check-circle"></i>
                 </div>
-                <div class="stat-value" id="statusValue"></div>
+                <div class="stat-value" id="statusValue">--</div>
                 <div class="stat-label">وضعیت</div>
             </div>
         </div>
@@ -942,20 +969,22 @@
         </section>
 
         <section class="generic-section" style="text-align: center;">
-            <h2 class="usage-title">کد QR</h2>
+            <h2 class="usage-title" style="justify-content: center;">کد QR</h2>
             <p style="color: #94a3b8; margin-top: 0.5rem; margin-bottom: 1rem;">برای وارد کردن پیکربندی اسکن کنید</p>
             <div class="qr-container">
                 <canvas id="qrcode" width="200" height="200"></canvas>
             </div>
         </section>
 
-        <section class="generic-section" style="animation-delay: 0.5s; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+        <section class="generic-section" style="animation-delay: 0.5s;">
             <h2 class="usage-title" style="margin-bottom: 1.5rem;">لینک اشتراک</h2>
-            <div class="connection-item" style="flex-direction: row-reverse;">
+            <div class="connection-item-list" style="margin-bottom: 1rem;">
                 <span class="connection-text" id="subLinkText"></span>
-                <button class="copy-btn" id="subLinkCopyBtn">
-                    <i class="fas fa-copy"></i>
-                </button>
+                <span class="copy-btn-label" id="subCopyLabel">SUB</span>
+            </div>
+            <div class="connection-item-list">
+                <span class="connection-text" id="jsonLinkText"></span>
+                <span class="copy-btn-label" id="jsonCopyLabel" style="background-color: var(--secondary);">JSON</span>
             </div>
         </section>
 
@@ -970,9 +999,9 @@
                     کپی همه
                 </button>
                 {{ range .result }}
-                <div class="connection-item" style="flex-direction: row-reverse;">
+                <div class="connection-item-list">
                     <span class="connection-text">{{ . }}</span>
-                    <button class="copy-btn" onclick="copyToClipboard('{{ . }}')">
+                    <button class="copy-btn-label" onclick="copyToClipboard('{{ . }}')" style="border-radius: 0 10px 10px 0;">
                         <i class="fas fa-copy"></i>
                     </button>
                 </div>
@@ -983,100 +1012,166 @@
         <section class="apps-section">
             <h2 class="usage-title" style="margin-bottom: 2rem;">برنامه های اتصال</h2>
             <div class="apps-grid">
+                
                 <div class="app-card">
                     <div class="app-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <img src="https://play-lh.googleusercontent.com/a3dR56g1viLgbtdBBu_NSEdDuWkqJFIn5XFFoc7lKXApkf-av4HI7fTn2NhBjxVmPFHf=w480-h960-rw" alt="Happ Logo">
+                    </div>
+                    <div class="app-name">Happ</div>
+                    <div class="app-desc">برای اندروید و iOS</div>
+                    <div class="app-button-container">
+                        <div class="app-button-row">
+                            <a href="#" class="app-btn happ-add-link">
+                                <i class="fas fa-plus"></i> افزودن
+                            </a>
+                            <a href="happ://connect" class="app-btn" style="background: linear-gradient(135deg, var(--success), #059669);">
+                                <i class="fas fa-play"></i> اتصال
+                            </a>
+                            <a href="happ://disconnect" class="app-btn" style="background: linear-gradient(135deg, var(--danger), #dc2626);">
+                                <i class="fas fa-stop"></i> قطع
+                            </a>
+                        </div>
+                        <div class="app-button-row">
+                             <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
+                                <i class="fab fa-android"></i> اندروید
+                            </a>
+                            <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
+                                <i class="fab fa-apple"></i> iOS
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">
+                         <img src="https://play-lh.googleusercontent.com/LZ4jXc1dvJzi0VabcAIMXBuW3X3MQUO2lDToAQL4sNZHTqWbBokgbeog-5bKjJFKZcc=s248-rw" alt="v2rayTun Logo">
+                    </div>
+                    <div class="app-name">v2rayTun</div>
+                    <div class="app-desc">برای اندروید و iOS</div>
+                    <div class="app-button-container">
+                        <div class="app-button-row">
+                            <a href="#" class="app-btn v2raytun-import-link">
+                                <i class="fas fa-plus"></i> افزودن
+                            </a>
+                            <a href="#" class="app-btn v2raytun-import-link-alt" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));">
+                                +VIP
+                            </a>
+                            <a href="v2raytun://control/start" class="app-btn" style="background: linear-gradient(135deg, var(--success), #059669);">
+                                <i class="fas fa-play"></i> اتصال
+                            </a>
+                            <a href="v2raytun://control/stop" class="app-btn" style="background: linear-gradient(135deg, var(--danger), #dc2626);">
+                                <i class="fas fa-stop"></i> قطع
+                            </a>
+                        </div>
+                        <div class="app-button-row">
+                            <a href="https://play.google.com/store/apps/details?id=com.v2raytun.android" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
+                                <i class="fab fa-android"></i> اندروید
+                            </a>
+                            <a href="https://apps.apple.com/us/app/v2raytun/id6476628951" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
+                                <i class="fab fa-apple"></i> iOS
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-card">
+                    <div class="app-icon">
+                        <img src="https://shaammy.ir/wp-content/uploads/2024/11/Ay-VPN-Plus-510x510.png" alt="Ay VPN Plus Logo">
                     </div>
                     <div class="app-name">Ay VPN Plus</div>
                     <div class="app-desc">برای اندروید</div>
-                    <div class="app-buttons" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <a href="sn://subscription?url={{ .subUrl }}&name=AyVPN" class="app-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                           افزودن
-                        </a>
-                        <a href="https://shammay.ir/AyVPNplus" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
-                            <i class="fas fa-download"></i>
-                            دانلود
-                        </a>
+                    <div class="app-button-container">
+                        <div class="app-button-row">
+                            <a href="#" class="app-btn ayvpn-link">
+                                <i class="fas fa-external-link-alt"></i>
+                               افزودن
+                            </a>
+                            <a href="https://shammay.ir/AyVPNplus" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
+                                <i class="fas fa-download"></i>
+                                دانلود
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="app-card">
                     <div class="app-icon">
-                        <i class="fab fa-android"></i>
+                        <img src="https://shaammy.ir/wp-content/uploads/2024/11/v2rayNG-510x510.png" alt="v2rayNG Logo">
                     </div>
                     <div class="app-name">V2rayNG</div>
                     <div class="app-desc">برای اندروید</div>
-                    <div class="app-buttons" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <a href="v2rayng://install-config?url={{ .subUrl }}" class="app-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                           افزودن
-                        </a>
-                        <a href="https://github.com/2dust/v2rayNG/releases/download/1.10.9/v2rayNG_1.10.9_universal.apk" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
-                            <i class="fas fa-download"></i>
-                            دانلود
-                        </a>
+                    <div class="app-button-container">
+                       <div class="app-button-row">
+                            <a href="#" class="app-btn v2rayng-link">
+                                <i class="fas fa-external-link-alt"></i>
+                               افزودن
+                            </a>
+                            <a href="https://github.com/2dust/v2rayNG/releases/latest" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
+                                <i class="fas fa-download"></i>
+                                دانلود
+                            </a>
+                       </div>
                     </div>
                 </div>
 
                 <div class="app-card">
                     <div class="app-icon">
-                        <i class="fab fa-apple"></i>
+                         <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/84/c0/cb/84c0cbc9-0158-fa84-e6c0-d3a0523a4dad/AppIcon-0-0-1x_U007epad-0-0-0-1-0-85-220.png/434x0w.webp" alt="Streisand Logo">
                     </div>
                     <div class="app-name">Streisand</div>
                     <div class="app-desc">برای iOS</div>
-                    <div class="app-buttons" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <a href="streisand://import/{{ .subUrl }}" class="app-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                           افزودن
-                        </a>
-                        <a href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
-                            <i class="fas fa-download"></i>
-                            دانلود
-                        </a>
+                     <div class="app-button-container">
+                        <div class="app-button-row">
+                            <a href="#" class="app-btn streisand-link">
+                                <i class="fas fa-external-link-alt"></i>
+                               افزودن
+                            </a>
+                            <a href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
+                                <i class="fas fa-download"></i>
+                                دانلود
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="app-card">
                     <div class="app-icon">
-                        <i class="fab fa-apple"></i>
+                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/93/f7/59/93f759d7-968f-4133-dddd-6874555a2cc4/AppIcon-0-0-1x_U007epad-0-1-85-220.png/492x0w.webp" alt="V2Box Logo">
                     </div>
                     <div class="app-name">V2Box</div>
                     <div class="app-desc">برای iOS</div>
-                    <div class="app-buttons" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <a href="v2box://install-sub?url={{ .subUrl }}&name=AyVPN" class="app-btn">
-                            <i class="fas fa-external-link-alt"></i>
-                           افزودن
-                        </a>
-                        <a href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
-                            <i class="fas fa-download"></i>
-                            دانلود
-                        </a>
+                    <div class="app-button-container">
+                       <div class="app-button-row">
+                             <a href="#" class="app-btn v2box-link">
+                                <i class="fas fa-external-link-alt"></i>
+                               افزودن
+                            </a>
+                            <a href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
+                                <i class="fas fa-download"></i>
+                                دانلود
+                            </a>
+                       </div>
                     </div>
                 </div>
 
                 <div class="app-card">
                     <div class="app-icon">
-                        <i class="fab fa-windows"></i>
+                        <img src="https://shaammy.ir/wp-content/uploads/2024/11/V2RayN-510x510.png" alt="V2RayN Logo">
                     </div>
                     <div class="app-name">V2rayN</div>
                     <div class="app-desc">برای ویندوز</div>
-                    <a href="https://github.com/2dust/v2rayN/releases/download/7.13.1/v2rayN-windows-64-SelfContained.zip" target="_blank" class="app-btn">
+                    <a href="https://github.com/2dust/v2rayN/releases/latest" target="_blank" class="app-btn" style="margin-top: auto;">
                         <i class="fas fa-download"></i>
                         دانلود
                     </a>
                 </div>
 
-                <div class="app-card">
+                <div class="app-card" style="background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://shaammy.ir/wp-content/uploads/2025/01/Ay-Technic-1200x1200.webp'); background-size: cover; background-position: center; color: #1e293b;">
                     <div class="app-icon">
-                        <i class="fab fa-windows" style="position: absolute; top: 25%; left: 25%; font-size: 1.2rem; opacity: 0.8;"></i>
-                        <i class="fab fa-apple" style="position: absolute; top: 25%; right: 25%; font-size: 1.2rem; opacity: 0.8;"></i>
-                        <i class="fab fa-android" style="position: absolute; bottom: 25%; left: 35%; font-size: 1.2rem; opacity: 0.8;"></i>
-                        <i class="fab fa-linux" style="position: absolute; bottom: 25%; right: 35%; font-size: 1.2rem; opacity: 0.8;"></i>
-                    </div>
-                    <div class="app-name">برنامه های بیشتر</div>
-                    <div class="app-desc">برای همه سیستم عامل ها</div>
-                    <a href="https://shammay.ir" target="_blank" class="app-btn">
+                        </div>
+                    <div class="app-name" style="color: #1e293b;">برنامه های بیشتر</div>
+                    <div class="app-desc" style="color: #334155;">برای همه سیستم عامل ها</div>
+                    <a href="https://shammay.ir" target="_blank" class="app-btn" id="moreAppsBtn" style="margin-top: auto;">
                         <i class="fas fa-external-link-alt"></i>
                         مشاهده
                     </a>
@@ -1086,10 +1181,10 @@
         </section>
 
         <section class="support-section">
-            <h2 class="usage-title">پشتیبانی</h2>
+            <h2 class="usage-title" style="justify-content: center;">پشتیبانی</h2>
             <p style="color: #94a3b8; margin-top: 0.5rem; margin-bottom: 1.5rem;">برای پشتیبانی یا تمدید اشتراک با ما در ارتباط باشید</p>
             <div class="support-buttons">
-                <a href="https://t.me/Ay_VPN" target="_blank" class="support-btn">
+                <a href="https.me/Ay_VPN" target="_blank" class="support-btn">
                     <i class="fab fa-telegram"></i>
                     پشتیبانی تلگرام
                 </a>
@@ -1105,8 +1200,8 @@
         // Create floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
             const particleCount = 50;
-
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -1139,7 +1234,7 @@
 
         // Copy all connections
         function copyAllConnections() {
-            const texts = document.querySelectorAll('.connection-text');
+            const texts = document.querySelectorAll('#connectionsContent .connection-text');
             const allText = Array.from(texts).map(el => el.innerText.trim()).join("\n");
             copyToClipboard(allText);
         }
@@ -1148,7 +1243,7 @@
         function toggleConnections() {
             const content = document.getElementById('connectionsContent');
             const icon = document.getElementById('toggleIcon');
-            
+            if (!content || !icon) return;
             content.classList.toggle('expanded');
             icon.classList.toggle('rotated');
         }
@@ -1156,8 +1251,9 @@
         // Show toast notification
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
+            if (!toast) return;
             toast.textContent = message;
-            toast.style.background = type === 'success' ? '#10b981' : '#ef4444';
+            toast.style.background = type === 'success' ? 'var(--success)' : 'var(--danger)';
             toast.classList.add('show');
             
             setTimeout(() => {
@@ -1171,18 +1267,21 @@
             const downloadByte = parseInt('{{ .downloadByte }}', 10);
             const uploadByte = parseInt('{{ .uploadByte }}', 10);
             const usedBytes = downloadByte + uploadByte;
-            const remainingBytes = totalByte - usedBytes;
+            const remainingBytes = totalByte > 0 ? totalByte - usedBytes : 0;
             
             const usageMeter = document.getElementById('usageMeter');
-            const circumference = 2 * Math.PI * 70;
+            const usagePercentageEl = document.getElementById('usagePercentage');
+            if (!usageMeter || !usagePercentageEl) return;
             
+            const circumference = 2 * Math.PI * 70;
             let usagePercentage = 0;
+
             if (totalByte === 0) {
-                usagePercentage = Math.min(5, (usedBytes / 1000000000000) * 100);
-                document.getElementById('usagePercentage').textContent = '∞';
+                usagePercentage = 0;
+                usagePercentageEl.textContent = '∞';
             } else {
                 usagePercentage = Math.min(100, (usedBytes / totalByte) * 100);
-                document.getElementById('usagePercentage').textContent = Math.round(usagePercentage) + '%';
+                usagePercentageEl.textContent = Math.round(usagePercentage) + '%';
             }
             
             usageMeter.style.strokeDasharray = circumference;
@@ -1200,6 +1299,7 @@
         }
         
         function animateValue(element, finalValue) {
+            if (!element) return;
             let displayValue = '';
             const duration = 20;
             function type(index) {
@@ -1217,24 +1317,14 @@
             const expireTimestamp = parseInt(expireValue, 10) * 1000;
             const expireDateElement = document.getElementById('expireValue');
             const statusElement = document.getElementById('statusValue');
+            if (!expireDateElement || !statusElement) return;
 
             if (!expireValue || expireValue === '0' || isNaN(expireTimestamp)) {
-                expireDateElement.textContent = 'تا ابد';
+                expireDateElement.textContent = 'نامحدود';
             } else {
                 const expireDate = new Date(expireTimestamp);
                 const { jy, jm, jd } = jalaali.toJalaali(expireDate.getFullYear(), expireDate.getMonth() + 1, expireDate.getDate());
-                
-                // Check if other configs might have different times on the same day
-                // This is a simple client-side interpretation of your request.
-                // It assumes if a timestamp is passed, it should be displayed as a date.
-                const today = new Date();
-                today.setHours(0,0,0,0);
-                
-                if (expireDate < today && expireTimestamp !== 0) {
-                     expireDateElement.textContent = `${jy}/${jm}/${jd}`;
-                } else {
-                     expireDateElement.textContent = `${jy}/${jm}/${jd}`;
-                }
+                expireDateElement.textContent = `${jy}/${jm}/${jd}`;
             }
 
             const totalByte = parseInt('{{ .totalByte }}', 10);
@@ -1245,10 +1335,10 @@
 
             if (isExpired || isDataExceeded) {
                 statusElement.textContent = 'غیرفعال';
-                statusElement.style.color = '#ef4444';
+                statusElement.style.color = 'var(--danger)';
             } else {
                 statusElement.textContent = 'فعال';
-                statusElement.style.color = '#10b981';
+                statusElement.style.color = 'var(--success)';
             }
         }
 
@@ -1267,7 +1357,7 @@
                 console.error('Error generating QR code:', error);
                 const qrcodeElement = document.getElementById('qrcode');
                 if (qrcodeElement) {
-                    qrcodeElement.insertAdjacentHTML('afterend', '<p style="color: #ef4444; margin-top: 1rem;">خطا در ایجاد کد QR</p>');
+                    qrcodeElement.insertAdjacentHTML('afterend', '<p style="color: var(--danger); margin-top: 1rem;">خطا در ایجاد کد QR</p>');
                 }
             }
         }
@@ -1275,7 +1365,7 @@
         function toggleTheme() {
             const body = document.body;
             const themeIcon = document.getElementById('themeIcon');
-            
+            if (!body || !themeIcon) return;
             body.classList.toggle('light-mode');
             
             if (body.classList.contains('light-mode')) {
@@ -1293,60 +1383,81 @@
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 document.body.classList.add('light-mode');
-                document.getElementById('themeIcon').classList.remove('fa-moon');
-                document.getElementById('themeIcon').classList.add('fa-sun');
+                const themeIcon = document.getElementById('themeIcon');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
             }
             
-            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
             
             const originalSubUrl = '{{ .subUrl }}';
-            let modifiedSubUrl = originalSubUrl;
+            const subName = '⚡{{.sId}}🌙'; // Use plain text for the name
+            let mainUrl = originalSubUrl;
+            let altUrl = originalSubUrl;
+
             try {
-                const url = new URL(originalSubUrl);
-                url.port = '8688';
-                modifiedSubUrl = url.toString();
+                const url8688 = new URL(originalSubUrl);
+                url8688.port = '8688';
+                mainUrl = url8688.toString();
+
+                const url8868 = new URL(originalSubUrl);
+                url8868.port = '8868';
+                altUrl = url8868.toString();
+
             } catch (e) {
                 console.error("Could not modify URL, using original.", e);
             }
             
-            const ayVpnLink = document.querySelector("a[href^='sn://subscription']");
-            if (ayVpnLink) {
-                ayVpnLink.href = `sn://subscription?url=${encodeURIComponent(modifiedSubUrl)}&name=AyVPN`;
-            }
+            const finalMainUrl = mainUrl + '#' + subName;
+            const finalAltUrl = altUrl + '#' + subName;
+            const jsonUrl = altUrl.replace('/sub/', '/json/');
 
-            const v2rayngLink = document.querySelector("a[href^='v2rayng://install-config']");
-            if (v2rayngLink) {
-                v2rayngLink.href = `v2rayng://install-config?url=${encodeURIComponent(modifiedSubUrl)}`;
+            const linkMap = {
+                'v2rayng-link': `v2rayng://install-config?url=${encodeURIComponent(finalMainUrl)}`,
+                'ayvpn-link': `sn://subscription?url=${encodeURIComponent(mainUrl)}&name=${encodeURIComponent(subName)}`,
+                'v2box-link': `v2box://install-sub?url=${encodeURIComponent(mainUrl)}&name=${encodeURIComponent(subName)}`,
+                'streisand-link': `streisand://import/${finalMainUrl}`,
+                'happ-add-link': `happ://add/${finalMainUrl}`,
+                'v2raytun-import-link': `v2raytun://import/${finalMainUrl}`,
+                'v2raytun-import-link-alt': `v2raytun://import/${finalAltUrl}`
+            };
+            
+            for (const className in linkMap) {
+                const elements = document.querySelectorAll(`.${className}`);
+                elements.forEach(element => {
+                    if (element) {
+                        element.href = linkMap[className];
+                    }
+                });
             }
+            
+            // Link Sections
+            const subLinkTextEl = document.getElementById('subLinkText');
+            if(subLinkTextEl) subLinkTextEl.textContent = finalMainUrl;
+            
+            const jsonLinkTextEl = document.getElementById('jsonLinkText');
+            if(jsonLinkTextEl) jsonLinkTextEl.textContent = jsonUrl;
 
-            const streisandLink = document.querySelector("a[href^='streisand://import/']");
-            if (streisandLink) {
-                // Streisand does not expect the URL to be encoded
-                streisandLink.href = `streisand://import/${modifiedSubUrl}`;
-            }
+            // Copy handlers
+            document.getElementById('subCopyLabel')?.addEventListener('click', () => copyToClipboard(finalMainUrl));
+            document.getElementById('jsonCopyLabel')?.addEventListener('click', () => copyToClipboard(jsonUrl));
 
-            const v2boxLink = document.querySelector("a[href^='v2box://install-sub']");
-            if (v2boxLink) {
-                v2boxLink.href = `v2box://install-sub?url=${encodeURIComponent(modifiedSubUrl)}&name=AyVPN`;
-            }
-
-
-            // Populate the new subscription link section
-            const subLinkTextElement = document.getElementById('subLinkText');
-            if (subLinkTextElement) {
-                subLinkTextElement.textContent = modifiedSubUrl;
-            }
-            const subLinkCopyBtnElement = document.getElementById('subLinkCopyBtn');
-            if (subLinkCopyBtnElement) {
-                subLinkCopyBtnElement.onclick = function() {
-                    copyToClipboard(modifiedSubUrl);
-                };
+            // More Apps button functionality
+            const moreAppsBtn = document.getElementById('moreAppsBtn');
+            if(moreAppsBtn) {
+                moreAppsBtn.addEventListener('click', function(e) {
+                    e.preventDefault(); 
+                    copyToClipboard(finalMainUrl);
+                    window.open(this.href, '_blank');
+                });
             }
 
             createParticles();
             initUsageChart();
             initDateAndStatus();
-            initQRCode(modifiedSubUrl);
+            initQRCode(finalMainUrl);
         });
     </script>
 </body>
