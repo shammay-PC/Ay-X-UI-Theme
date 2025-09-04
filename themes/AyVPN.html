@@ -36,6 +36,10 @@
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+        
         a {
             text-decoration: none;
         }
@@ -242,7 +246,7 @@
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             animation: slideDown 1s ease-out;
         }
 
@@ -278,6 +282,56 @@
         .subtitle {
             color: #94a3b8;
             font-size: 1.1rem;
+        }
+
+        /* Quick Action Buttons */
+        .quick-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-btn {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--light);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            flex-grow: 1;
+            max-width: 200px;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .quick-btn .fab.fa-telegram-plane {
+            color: #2AABEE;
+        }
+
+        body.light-mode .quick-btn {
+            background: rgba(255, 255, 255, 0.7);
+            color: #334155;
+            border-color: rgba(0,0,0,0.1);
+        }
+        
+        body.light-mode .quick-btn:hover {
+            background: #fff;
         }
 
         /* Stats Grid */
@@ -591,6 +645,128 @@
             margin-bottom: 3rem;
             animation: fadeInUp 1s ease-out 0.6s both;
         }
+        
+        /* How To Connect Section */
+        .how-to-section {
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .how-to-header {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .how-to-header:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        body.light-mode .how-to-header:hover {
+            background: rgba(255,255,255,0.95);
+        }
+
+        .how-to-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            background: rgba(0,0,0,0.2);
+            border-radius: 0 0 20px 20px;
+            margin-top: -10px;
+            padding-top: 10px;
+        }
+        
+        body.light-mode .how-to-content {
+            background: rgba(0,0,0,0.03);
+        }
+
+        .how-to-content.expanded {
+            max-height: 500px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            padding: 1rem 1rem 0 1rem;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--light);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3));
+            border-bottom-color: var(--accent);
+        }
+        
+        body.light-mode .tab-btn {
+            color: #475569;
+        }
+        
+        body.light-mode .tab-btn.active {
+            color: #1e293b;
+            background: rgba(59, 130, 246, 0.15);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 1.5rem 2rem;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content p {
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+        
+        body.light-mode .tab-content p {
+            color: #334155;
+        }
+
+        .clickable-text {
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .clickable-text:hover {
+            filter: brightness(1.2);
+        }
+
+        body.light-mode .clickable-text {
+             background: linear-gradient(135deg, var(--primary-dark), var(--accent-dark));
+            -webkit-background-clip: text;
+        }
 
         .section-header {
             display: flex;
@@ -780,6 +956,10 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
+        
+        .app-btn.vip-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        }
 
         /* Support Section */
         .support-section {
@@ -820,6 +1000,60 @@
             background: linear-gradient(135deg, var(--primary), #059669);
             box-shadow: 0 15px 30px rgba(16, 185, 129, 0.3);
         }
+        
+        /* Popup Modal */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 0;
+        }
+
+        .popup-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-close-btn:hover {
+            transform: rotate(90deg);
+            background: rgba(255,0,0,0.7);
+        }
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -843,6 +1077,16 @@
                 flex-direction: column;
             }
         }
+        
+        @media (max-width: 480px) {
+            .quick-actions {
+                flex-direction: row; /* Keep as row */
+            }
+            .quick-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
 
         /* Toast Notification */
         .toast {
@@ -853,7 +1097,7 @@
             color: white;
             padding: 1rem 2rem;
             border-radius: 10px;
-            z-index: 1000;
+            z-index: 1001;
             transform: translateX(120%);
             transition: transform 0.3s ease;
         }
@@ -873,6 +1117,11 @@
     <button class="theme-toggle" id="themeToggle">
         <i class="fas fa-moon" id="themeIcon"></i>
     </button>
+    
+    <div class="popup-overlay" id="telegramPopup">
+        <iframe class="popup-content" src="https://t.me/AyVPNsupport"></iframe>
+        <button class="popup-close-btn" id="closePopupBtn">&times;</button>
+    </div>
 
     <div class="container">
         <header class="header">
@@ -883,6 +1132,14 @@
                <h1 class="title">Ay VPN</h1>
             </a>
             <p class="subtitle">کاربر: {{ .sId }}</p>
+            <div class="quick-actions">
+                <a href="#how-to-connect" class="quick-btn">
+                    <i class="fas fa-question-circle"></i> راهنمای اتصال
+                </a>
+                <button id="openPopupBtn" class="quick-btn">
+                    <i class="fab fa-telegram-plane"></i> پروکسی تلگرام
+                </button>
+            </div>
         </header>
 
         <div class="stats-grid">
@@ -1008,8 +1265,37 @@
                 {{ end }}
             </div>
         </section>
+        
+        <section class="how-to-section" id="how-to-connect">
+            <div class="how-to-header" id="howToHeader">
+                <h2 class="section-title">چطور متصل بشم؟</h2>
+                <i class="fas fa-chevron-down toggle-icon" id="howToToggleIcon"></i>
+            </div>
+            <div class="how-to-content" id="howToContent">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="android">اندروید</button>
+                    <button class="tab-btn" data-tab="ios">iOS</button>
+                    <button class="tab-btn" data-tab="computer">کامپیوتر</button>
+                </div>
+                <div id="android" class="tab-content active">
+                    <p>
+                        برای اتصال در اندروید، ابتدا یکی از برنامه های پیشنهادی را نصب کنید. سپس میتوانید با <span class="clickable-text" onclick="copyToClipboard(document.getElementById('subLinkText').textContent)">کپی لینک</span> و وارد کردن آن در برنامه، یا از طریق <span class="clickable-text" onclick="document.getElementById('apps-section').scrollIntoView()">افزودن مستقیم</span> با یک کلیک، کانفیگ ها را به برنامه خود اضافه کنید.
+                    </p>
+                </div>
+                <div id="ios" class="tab-content">
+                    <p>
+                       برای اتصال در آیفون، پس از نصب برنامه مورد نظر، به راحتی با <span class="clickable-text" onclick="copyToClipboard(document.getElementById('subLinkText').textContent)">کپی لینک</span> اشتراک و وارد کردن آن در اپ، و یا از طریق <span class="clickable-text" onclick="document.getElementById('apps-section').scrollIntoView()">افزودن مستقیم</span>، پروفایل خود را اضافه کرده و متصل شوید.
+                    </p>
+                </div>
+                <div id="computer" class="tab-content">
+                    <p>
+                        برای استفاده در ویندوز، برنامه V2rayN را نصب کنید. سپس با <span class="clickable-text" onclick="copyToClipboard(document.getElementById('subLinkText').textContent)">کپی لینک</span> اشتراک و افزودن آن در بخش Subscriptions برنامه، کانفیگ ها را دریافت و استفاده کنید. امکان <span class="clickable-text" onclick="document.getElementById('apps-section').scrollIntoView()">افزودن مستقیم</span> در ویندوز وجود ندارد.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-        <section class="apps-section">
+        <section class="apps-section" id="apps-section">
             <h2 class="usage-title" style="margin-bottom: 2rem;">برنامه های اتصال</h2>
             <div class="apps-grid">
                 
@@ -1024,6 +1310,11 @@
                             <a href="#" class="app-btn happ-add-link">
                                 <i class="fas fa-plus"></i> افزودن
                             </a>
+                            <a href="#" class="app-btn vip-btn happ-add-link-alt">
+                                <i class="fas fa-plus"></i> VIP
+                            </a>
+                        </div>
+                        <div class="app-button-row">
                             <a href="happ://connect" class="app-btn" style="background: linear-gradient(135deg, var(--success), #059669);">
                                 <i class="fas fa-play"></i> اتصال
                             </a>
@@ -1053,9 +1344,11 @@
                             <a href="#" class="app-btn v2raytun-import-link">
                                 <i class="fas fa-plus"></i> افزودن
                             </a>
-                            <a href="#" class="app-btn v2raytun-import-link-alt" style="background: linear-gradient(135deg, var(--accent), var(--accent-dark));">
-                                +VIP
+                            <a href="#" class="app-btn vip-btn v2raytun-import-link-alt">
+                               <i class="fas fa-plus"></i> VIP
                             </a>
+                        </div>
+                        <div class="app-button-row">
                             <a href="v2raytun://control/start" class="app-btn" style="background: linear-gradient(135deg, var(--success), #059669);">
                                 <i class="fas fa-play"></i> اتصال
                             </a>
@@ -1083,12 +1376,12 @@
                     <div class="app-button-container">
                         <div class="app-button-row">
                             <a href="#" class="app-btn ayvpn-link">
-                                <i class="fas fa-external-link-alt"></i>
-                               افزودن
+                                <i class="fas fa-external-link-alt"></i> افزودن
                             </a>
-                            <a href="https://shammay.ir/AyVPNplus" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
-                                <i class="fas fa-download"></i>
-                                دانلود
+                        </div>
+                        <div class="app-button-row">
+                             <a href="https://shammay.ir/AyVPNplus" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
+                                <i class="fas fa-download"></i> دانلود
                             </a>
                         </div>
                     </div>
@@ -1103,12 +1396,12 @@
                     <div class="app-button-container">
                        <div class="app-button-row">
                             <a href="#" class="app-btn v2rayng-link">
-                                <i class="fas fa-external-link-alt"></i>
-                               افزودن
+                                <i class="fas fa-external-link-alt"></i> افزودن
                             </a>
+                       </div>
+                       <div class="app-button-row">
                             <a href="https://github.com/2dust/v2rayNG/releases/latest" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #34a853, #4285f4);">
-                                <i class="fas fa-download"></i>
-                                دانلود
+                                <i class="fas fa-download"></i> دانلود
                             </a>
                        </div>
                     </div>
@@ -1123,12 +1416,15 @@
                      <div class="app-button-container">
                         <div class="app-button-row">
                             <a href="#" class="app-btn streisand-link">
-                                <i class="fas fa-external-link-alt"></i>
-                               افزودن
+                                <i class="fas fa-plus"></i> افزودن
                             </a>
+                            <a href="#" class="app-btn vip-btn streisand-link-alt">
+                                <i class="fas fa-plus"></i> VIP
+                            </a>
+                        </div>
+                        <div class="app-button-row">
                             <a href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
-                                <i class="fas fa-download"></i>
-                                دانلود
+                                <i class="fas fa-download"></i> دانلود
                             </a>
                         </div>
                     </div>
@@ -1143,12 +1439,15 @@
                     <div class="app-button-container">
                        <div class="app-button-row">
                              <a href="#" class="app-btn v2box-link">
-                                <i class="fas fa-external-link-alt"></i>
-                               افزودن
+                                <i class="fas fa-plus"></i> افزودن
                             </a>
+                            <a href="#" class="app-btn vip-btn v2box-link-alt">
+                                <i class="fas fa-plus"></i> VIP
+                            </a>
+                       </div>
+                       <div class="app-button-row">
                             <a href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #5856d6, #007aff);">
-                                <i class="fas fa-download"></i>
-                                دانلود
+                                <i class="fas fa-download"></i> دانلود
                             </a>
                        </div>
                     </div>
@@ -1160,10 +1459,21 @@
                     </div>
                     <div class="app-name">V2rayN</div>
                     <div class="app-desc">برای ویندوز</div>
-                    <a href="https://github.com/2dust/v2rayN/releases/latest" target="_blank" class="app-btn" style="margin-top: auto;">
-                        <i class="fas fa-download"></i>
-                        دانلود
-                    </a>
+                    <div class="app-button-container">
+                        <div class="app-button-row">
+                            <button class="app-btn" onclick="copyToClipboard(document.getElementById('subLinkText').textContent)">
+                                <i class="fas fa-copy"></i> کپی لینک اشتراک
+                            </button>
+                            <button class="app-btn vip-btn" onclick="copyToClipboard(document.getElementById('jsonLinkText').textContent)">
+                                <i class="fas fa-copy"></i> کپی VIP
+                            </button>
+                        </div>
+                        <div class="app-button-row">
+                            <a href="https://github.com/2dust/v2rayN/releases/latest" target="_blank" class="app-btn" style="background: linear-gradient(135deg, #0078D6, #00539C); flex-basis: 100%;">
+                                <i class="fab fa-windows"></i> دانلود برای ویندوز
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="app-card" style="background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://shaammy.ir/wp-content/uploads/2025/01/Ay-Technic-1200x1200.webp'); background-size: cover; background-position: center; color: #1e293b;">
@@ -1380,6 +1690,7 @@
         }
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Theme setup
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 document.body.classList.add('light-mode');
@@ -1389,11 +1700,11 @@
                     themeIcon.classList.add('fa-sun');
                 }
             }
-            
             document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
             
+            // Link generation
             const originalSubUrl = '{{ .subUrl }}';
-            const subName = '⚡{{.sId}}🌙'; // Use plain text for the name
+            const subName = '⚡{{.sId}}🌙'; 
             let mainUrl = originalSubUrl;
             let altUrl = originalSubUrl;
 
@@ -1414,12 +1725,16 @@
             const finalAltUrl = altUrl + '#' + subName;
             const jsonUrl = altUrl.replace('/sub/', '/json/');
 
+            // App link mapping
             const linkMap = {
                 'v2rayng-link': `v2rayng://install-config?url=${encodeURIComponent(finalMainUrl)}`,
                 'ayvpn-link': `sn://subscription?url=${encodeURIComponent(mainUrl)}&name=${encodeURIComponent(subName)}`,
                 'v2box-link': `v2box://install-sub?url=${encodeURIComponent(mainUrl)}&name=${encodeURIComponent(subName)}`,
+                'v2box-link-alt': `v2box://install-sub?url=${encodeURIComponent(altUrl)}&name=${encodeURIComponent(subName + ' VIP')}`,
                 'streisand-link': `streisand://import/${finalMainUrl}`,
+                'streisand-link-alt': `streisand://import/${finalAltUrl}`,
                 'happ-add-link': `happ://add/${finalMainUrl}`,
+                'happ-add-link-alt': `happ://add/${finalAltUrl}`,
                 'v2raytun-import-link': `v2raytun://import/${finalMainUrl}`,
                 'v2raytun-import-link-alt': `v2raytun://import/${finalAltUrl}`
             };
@@ -1433,7 +1748,7 @@
                 });
             }
             
-            // Link Sections
+            // Subscription Link Sections
             const subLinkTextEl = document.getElementById('subLinkText');
             if(subLinkTextEl) subLinkTextEl.textContent = finalMainUrl;
             
@@ -1444,16 +1759,36 @@
             document.getElementById('subCopyLabel')?.addEventListener('click', () => copyToClipboard(finalMainUrl));
             document.getElementById('jsonCopyLabel')?.addEventListener('click', () => copyToClipboard(jsonUrl));
 
-            // More Apps button functionality
-            const moreAppsBtn = document.getElementById('moreAppsBtn');
-            if(moreAppsBtn) {
-                moreAppsBtn.addEventListener('click', function(e) {
-                    e.preventDefault(); 
-                    copyToClipboard(finalMainUrl);
-                    window.open(this.href, '_blank');
+            // How To Section Accordion
+            const howToHeader = document.getElementById('howToHeader');
+            const howToContent = document.getElementById('howToContent');
+            const howToIcon = document.getElementById('howToToggleIcon');
+            howToHeader.addEventListener('click', () => {
+                howToContent.classList.toggle('expanded');
+                howToIcon.classList.toggle('rotated');
+            });
+            
+            // How To Section Tabs
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(button.dataset.tab).classList.add('active');
                 });
-            }
+            });
 
+            // Popup Logic
+            const popup = document.getElementById('telegramPopup');
+            const openBtn = document.getElementById('openPopupBtn');
+            const closeBtn = document.getElementById('closePopupBtn');
+            openBtn.addEventListener('click', () => popup.classList.add('show'));
+            closeBtn.addEventListener('click', () => popup.classList.remove('show'));
+
+            // Initializations
             createParticles();
             initUsageChart();
             initDateAndStatus();
